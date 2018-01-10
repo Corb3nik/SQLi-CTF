@@ -1,0 +1,20 @@
+version: '2'
+services:
+  database:
+    build: ./mysql/
+    command: mysqld --user=root --verbose
+    environment:
+      MYSQL_DATABASE: "web_level3_sqli"
+      MYSQL_USER: "web_level3_sqli"
+      MYSQL_PASSWORD: "thisisasecurepassword123"
+      MYSQL_ROOT_PASSWORD: "root"
+      MYSQL_ALLOW_EMPTY_PASSWORD: "yes"
+  web:
+    build: ./www/
+    ports:
+     - "12000:80"
+    volumes:
+      - ./www/src:/var/www/html
+    links:
+      - database
+
